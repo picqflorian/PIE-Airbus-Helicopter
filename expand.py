@@ -15,7 +15,11 @@ def process_flight_sequences(df, md=1.0):
     
     # Pour chaque colonne d'index, on convertit en int, puis str, puis on ajoute les zéros
     for col in target_cols:
-        df[col] = df[col].astype(int).astype(str).str.zfill(3)
+        if col == 'THIRD_WORD_INDEX':
+            # Le troisième index peut aller jusqu'à 4 chiffres
+            df[col] = df[col].astype(int).astype(str).str.zfill(4)
+        else:
+            df[col] = df[col].astype(int).astype(str).str.zfill(3)
         
     # Concaténation : 003 + 010 + 285 = "003010285" (toujours 9 caractères)
     df['Phase_ID'] = df[target_cols].agg(''.join, axis=1)
