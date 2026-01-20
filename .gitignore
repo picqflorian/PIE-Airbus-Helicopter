@@ -210,4 +210,6 @@ __marimo__/
 old_data.csv
 PIE_data.csv
 Data/
+docs_PIE/
+PIE_data_with_context.csv
 
