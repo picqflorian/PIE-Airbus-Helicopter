@@ -1481,6 +1481,8 @@ dependencies = [
     { name = "python-louvain" },
     { name = "pyvis" },
     { name = "scikit-learn" },
+    { name = "scipy", version = "1.15.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "scipy", version = "1.16.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "seaborn" },
     { name = "sentence-transformers" },
 ]
@@ -1496,6 +1498,7 @@ requires-dist = [
     { name = "python-louvain", specifier = ">=0.16" },
     { name = "pyvis", specifier = ">=0.3.2" },
     { name = "scikit-learn", specifier = ">=1.7.2" },
+    { name = "scipy", specifier = ">=1.15.3" },
     { name = "seaborn", specifier = ">=0.13.2" },
     { name = "sentence-transformers", specifier = ">=5.1.2" },
 ]

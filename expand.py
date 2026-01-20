@@ -52,21 +52,22 @@ def process_flight_sequences(df, md=1.0):
     
     return df_sequence
 
-# --- Test ---
-df = pd.read_csv("PIE_data.csv", sep=";", header=0, index_col=0)
-df = df.sort_values(by=['F_SESSION', 'F_START_FRAME'], ascending=[True, True])
+if __name__ == "__main__":
+    # --- Test ---
+    df = pd.read_csv("PIE_data.csv", sep=";", header=0, index_col=0)
+    df = df.sort_values(by=['F_SESSION', 'F_START_FRAME'], ascending=[True, True])
 
-print("--- df utilisé, les 4000 premières lignes ---")
-test = df.head(4000) # On prend un échantillon
-print(test.head())
+    print("--- df utilisé, les 4000 premières lignes ---")
+    test = df.head(4000) # On prend un échantillon
+    print(test.head())
 
-# On va garder que les 10 premières colonnes des 10 premièrs vols pour l'affichage
-print("--- Test avec md = 1 (Temporel) ---")
-res_time = process_flight_sequences(df, md=1)
-print(res_time.iloc[:, :10].head(10)) 
+    # On va garder que les 10 premières colonnes des 10 premièrs vols pour l'affichage
+    print("--- Test avec md = 1 (Temporel) ---")
+    res_time = process_flight_sequences(df, md=1)
+    print(res_time.iloc[:, :10].head(10)) 
 
-print("\n--- Test avec md = None (Séquentiel pur) ---")
-res_seq = process_flight_sequences(df, md=None)
-print(res_seq.iloc[:, :10].head(10))
+    print("\n--- Test avec md = None (Séquentiel pur) ---")
+    res_seq = process_flight_sequences(df, md=None)
+    print(res_seq.iloc[:, :10].head(10))
 
 
