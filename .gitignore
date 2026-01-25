@@ -212,4 +212,5 @@ PIE_data.csv
 Data/
 docs_PIE/
 PIE_data_with_context.csv
-
+final_network.csv
+motif_network.html
