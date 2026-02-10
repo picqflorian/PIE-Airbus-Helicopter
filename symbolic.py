@@ -257,8 +257,8 @@ if __name__ == "__main__":
     # will take extremely long without optimization/parallelization.
     print(f"Loading data from {filename}...")
     try:
-        # df = pd.read_csv(filename, sep=";", header=0, nrows=10000) 
-        df = pd.read_csv(filename, sep=";", header=0) 
+        df = pd.read_csv(filename, sep=";", header=0, nrows=100000) 
+        # df = pd.read_csv(filename, sep=";", header=0) 
         print(f"Data loaded successfully. Shape: {df.shape}")
     except FileNotFoundError:
         print("Error: File not found. Please check the path.")
