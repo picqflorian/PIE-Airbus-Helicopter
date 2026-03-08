@@ -160,9 +160,9 @@ def build_similarity_matrix(logical_sequences):
 # 5. Visualization & Cluster Analysis (SAVING TO FILES)
 # ============================================================
 
-def visualize_dendrogram(linkage_matrix, labels):
+def visualize_dendrogram(linkage_matrix, labels, filename="LCS_dendrogram_original.png"):
     """
-    Plots the standard Hierarchical Clustering Dendrogram.
+    Plots the standard Hierarchical Clustering Dendrogram and saves it to a file.
     """
     plt.figure(figsize=(12, 5))
     dendrogram(linkage_matrix, labels=labels, leaf_rotation=90)
@@ -170,12 +170,17 @@ def visualize_dendrogram(linkage_matrix, labels):
     plt.ylabel("Distance (1 - Similarity)")
     plt.xlabel("Flights (F_SESSION)")
     plt.tight_layout()
+    
+    # Guardar la imagen antes de mostrarla
+    plt.savefig(filename, dpi=300, bbox_inches='tight')
+    print(f"[SUCCESS] Dendrogram saved to: {filename}")
+    
     plt.show()
 
-def visualize_dendrogram_with_thresholds(linkage_matrix, labels, thresholds):
+def visualize_dendrogram_with_thresholds(linkage_matrix, labels, thresholds, filename="LCS_dendrogram_thresholds.png"):
     """
     Plots the Hierarchical Clustering Dendrogram with horizontal lines 
-    representing the cut thresholds used for cluster generation.
+    representing the cut thresholds used for cluster generation and saves it.
     """
     plt.figure(figsize=(12, 5))
     dendrogram(linkage_matrix, labels=labels, leaf_rotation=90)
@@ -196,6 +201,11 @@ def visualize_dendrogram_with_thresholds(linkage_matrix, labels, thresholds):
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     
     plt.tight_layout()
+    
+    # Guardar la imagen antes de mostrarla
+    plt.savefig(filename, dpi=300, bbox_inches='tight')
+    print(f"[SUCCESS] Thresholds Dendrogram saved to: {filename}")
+    
     plt.show()
 
 def analyze_clusters_at_thresholds(linkage_matrix, sim_matrix_index, df_context, thresholds, 
@@ -273,7 +283,8 @@ if __name__ == "__main__":
     
     print(f"Loading data from {filename}...")
     try:
-        df = pd.read_csv(filename, sep=";", header=0, nrows=150000) 
+        # df = pd.read_csv(filename, sep=";", header=0)
+        df = pd.read_csv(filename, sep=";", header=0, nrows=1000) 
         print(f"Data loaded successfully. Shape: {df.shape}")
     except FileNotFoundError:
         print("Error: File not found. Please check the path.")
@@ -301,6 +312,10 @@ if __name__ == "__main__":
 
     sim_matrix = build_similarity_matrix(logical_sequences)
     print("Similarity matrix calculated.")
+    
+    # GUARDAMOS LA MATRIZ PARA FUTUROS USOS (ej. script de nube de puntos)
+    sim_matrix.to_csv("LCS_sim_matrix.csv", sep=";")
+    print("[SUCCESS] Similarity matrix saved to: LCS_sim_matrix.csv")
 
     # --- 6. Hierarchical Clustering ---
     distance_matrix = 1 - sim_matrix.values
@@ -315,10 +330,10 @@ if __name__ == "__main__":
 
     # --- 8. Visualizations ---
     # Plot standard dendrogram (Original)
-    visualize_dendrogram(linkage_matrix, sim_matrix.index)
+    visualize_dendrogram(linkage_matrix, sim_matrix.index, filename="LCS_dendrogram_original.png")
     
     # Plot new dendrogram with horizontal threshold lines
-    visualize_dendrogram_with_thresholds(linkage_matrix, sim_matrix.index, thresholds_to_test)
+    visualize_dendrogram_with_thresholds(linkage_matrix, sim_matrix.index, thresholds_to_test, filename="LCS_dendrogram_thresholds.png")
 
     # --- 9. Cluster Analysis & File Export ---
     analyze_clusters_at_thresholds(
